@@ -5,16 +5,19 @@ const Products = () => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/product')
+        fetch('https://aqueous-taiga-75883.herokuapp.com/product')
         .then(res => res.json())
         .then(data => setProducts(data))
     },[])
     return (
-        <div>
+        <div className='container my-5'>
             <h3>Products</h3>
+            <div className='row my-3 g-5'>
             {
-                products.map(product => <Product key={product._id} product={product}></Product>)
+                products.slice(0,6).map(product => <Product key={product._id} product={product}></Product>)
             }
+            </div>
+           
         </div>
     );
 };
