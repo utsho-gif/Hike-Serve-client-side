@@ -6,6 +6,7 @@ import Header from "./pages/Shared/Header/Header";
 import SignIn from "./pages/SignIn/SignIn/SignIn";
 import Inventory from "./pages/Inventory/Inventory";
 import RequireAuth from "./pages/SignIn/RequireAuth/RequireAuth";
+import SignUp from "./pages/SignIn/SignUp/SignUp";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           }
         ></Route>
         <Route path="/signin" element={<SignIn></SignIn>}></Route>
+        <Route path='/signup' element={<SignUp></SignUp>}></Route>
       </Routes>
     </div>
   );
