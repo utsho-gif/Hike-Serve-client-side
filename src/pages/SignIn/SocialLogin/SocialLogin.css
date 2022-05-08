@@ -1,0 +1,8 @@
+.size{
+    width: 50%;
+}
+@media screen and (max-width: 720px) {
+    .size{
+        width: 100%;
+    }
+}

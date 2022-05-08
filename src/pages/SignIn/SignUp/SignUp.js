@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import { useCreateUserWithEmailAndPassword, useUpdateProfile } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import auth from "../../../firebase.init";
 import {MdOutlineAppRegistration} from "react-icons/md";
-import { css } from "@emotion/react";
 import { HashLoader } from "react-spinners";
+import { css } from "@emotion/react";
+import SocialLogin from '../SocialLogin/SocialLogin';
 
 
 const override = css`
@@ -15,6 +16,7 @@ const override = css`
 `;
 
 const SignUp = () => {
+  const [passErr, setPassErr] = useState('');
   let [color, setColor] = useState("#36D7B7");
   const navigate = useNavigate();
   const [
@@ -22,8 +24,10 @@ const SignUp = () => {
     user,
     loading,
     error,
-  ] = useCreateUserWithEmailAndPassword(auth);
+  ] = useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
+  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  
   let loadingEle;
   if(loading){
     loadingEle = (
@@ -36,19 +40,33 @@ const SignUp = () => {
   let errorEle;
   if(error){
     errorEle = (
-      <p className="text-warning text-bold">
+      <p className="text-danger fw-bold">
         {error?.message}
       </p>
     )
   }
+  let passEle;
+  if(passErr){
+    passEle = (
+      <p className="text-danger fw-bold">
+        {passErr}
+      </p>
+    )
+  }
 
-  const [updateProfile, updating, updateError] = useUpdateProfile(auth);
+  
   const handleSignup = async event => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
+    const confpass = event.target.ConfPassword.value;
     const displayName = event.target.name.value;
-    await createUserWithEmailAndPassword(email, password);
+    if(password === confpass){
+      await createUserWithEmailAndPassword(email, password);
+    }
+    else{
+      setPassErr("Password doesn't match")
+    }
     await updateProfile({displayName});
   }
   if(user){
@@ -89,6 +107,7 @@ const SignUp = () => {
             required
           />
         </Form.Group>
+        {passErr ? passEle : loadingEle}
         {error ? errorEle : loadingEle}
         <Button
           className="w-50 mx-auto d-block rounded-pill mb-1"
@@ -98,6 +117,11 @@ const SignUp = () => {
           Sign Up
         </Button>
       </Form>
+      <p className="mt-4">
+          Already have an account?
+          <Link to='/signin' className="text-decoration-none ms-2">Sign In</Link>
+        </p>
+        <SocialLogin></SocialLogin>
     </div>
         </div>
     );

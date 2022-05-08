@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useSignInWithEmailAndPassword, useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import {CgLogIn} from 'react-icons/cg';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { HashLoader } from "react-spinners";
 import auth from "../../../firebase.init";
 import { css } from "@emotion/react";
+import SocialLogin from "../SocialLogin/SocialLogin";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const override = css`
@@ -15,6 +18,7 @@ const override = css`
 `;
 
 const SignIn = () => {
+  const emailRef = useRef("");
   let [color, setColor] = useState("#36D7B7");
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,6 +30,8 @@ const SignIn = () => {
     error,
   ] = useSignInWithEmailAndPassword(auth);
 
+  const [sendPasswordResetEmail, sending, resetError] = useSendPasswordResetEmail(auth);
+
   let loadingEle;
   if(loading){
     loadingEle = (
@@ -36,10 +42,10 @@ const SignIn = () => {
   }
 
   let errorEle;
-  if(error){
+  if(error || resetError){
     errorEle = (
-      <p className="text-warning text-bold">
-        {error?.message}
+      <p className="text-danger fw-bold">
+        {error?.message || resetError?.message}
       </p>
     )
   }
@@ -54,6 +60,16 @@ const SignIn = () => {
     const password = event.target.password.value;
     signInWithEmailAndPassword(email, password);
   }
+  const handleResetPass = async event => {
+    const email = emailRef.current.value;
+    if(email){
+      await sendPasswordResetEmail(email);
+      toast.success('Email Send');
+    }
+    else{
+      toast.error('Invalid Email');
+    }
+  }
   return (
     <div className="container">
       <div className="container w-50 mb-4">
@@ -61,6 +77,7 @@ const SignIn = () => {
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-5 w-100" controlId="formBasicEmail">
             <Form.Control
+              ref={emailRef}
               name="email"
               type="email"
               placeholder='&#x2709;'
@@ -90,6 +107,17 @@ const SignIn = () => {
           Don't have account?
           <Link to='/signup' className="text-decoration-none ms-2">Create new Account</Link>
         </p>
+        <p>
+          Forget Password?
+          <button
+          onClick={handleResetPass}
+          className="btn text-primary text-decoration-none"
+        >
+          Reset Password
+        </button>
+        </p>
+        <SocialLogin></SocialLogin>
+        <ToastContainer/>
       </div>
     </div>
   );

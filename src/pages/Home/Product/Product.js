@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 const Product = ({ product }) => {
   const navigate = useNavigate();
-  const { name, img, quantity } = product;
-  const handleNavigate = () => {
-      navigate('/inventory');
+  const { name, img, quantity, _id } = product;
+  const handleNavigate = (id) => {
+      navigate(`/inventory/${id}`);
   }
   return (
     <div className="col-12 col-lg-4 col-md-6">
@@ -15,7 +15,7 @@ const Product = ({ product }) => {
         <h5>Quantity: {quantity}</h5>
       </div>
 
-      <button onClick={handleNavigate} className="btn btn-outline-dark">Manage</button>
+      <button onClick={() => handleNavigate(_id)} className="btn btn-outline-dark">Manage</button>
     </div>
   );
 };
