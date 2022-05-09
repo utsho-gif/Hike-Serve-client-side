@@ -9,9 +9,9 @@ const Inventory = () => {
   const { _id, name, img, description, price, quantity, supplier, sold } =
     product;
 
-  const url = `http://localhost:5000/inventory/${id}`;
-  useEffect(() => {
-    fetch(url)
+    const url = `https://aqueous-taiga-75883.herokuapp.com/inventory/${id}`;
+    useEffect(() => {
+        fetch(url)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [url]);
@@ -26,7 +26,7 @@ const Inventory = () => {
     const newValue = { quantity: `${newQuantity}`, ...rest };
     setItem(newValue);
     //send to server
-    // const url = `http://localhost:5000/inventory/${id}`;
+    const url = `https://aqueous-taiga-75883.herokuapp.com/inventory/${id}`;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -44,6 +44,7 @@ const Inventory = () => {
       const newQuantity = parseInt(quantity) + upQuantity;
       const newValue = {quantity: `${newQuantity}`, ...rest};
       setItem(newValue);
+      const url = `https://aqueous-taiga-75883.herokuapp.com/inventory/${id}`;
       fetch(url, {
           method: 'PUT',
           headers: {

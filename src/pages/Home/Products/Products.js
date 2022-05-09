@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import useProduct from '../../../hooks/useProduct';
 import Product from '../Product/Product';
 
 const Products = () => {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        fetch('http://localhost:5000/product')
-        .then(res => res.json())
-        .then(data => setProducts(data))
-    },[])
+    const [products, setProducts] = useProduct();
     return (
         <div className='container my-5'>
             <h3>Products</h3>
