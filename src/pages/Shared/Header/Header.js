@@ -26,7 +26,6 @@ const Header = () => {
       </p>
     )
   }
-  console.log(user);
   const handleSignOut = () => {
     signOut(auth)
     .then(() => {})

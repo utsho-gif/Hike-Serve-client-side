@@ -38,6 +38,22 @@ const Inventory = () => {
       .then((data) => setItem(data));
     window.location.reload();
   };
+  const handleRestoke = event => {
+      const upQuantity = parseInt(event.target.restoke.value);
+      const {quantity, ...rest} = item;
+      const newQuantity = parseInt(quantity) + upQuantity;
+      const newValue = {quantity: `${newQuantity}`, ...rest};
+      setItem(newValue);
+      fetch(url, {
+          method: 'PUT',
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({newValue})
+      })
+      .then(res => res.json())
+      .then(data => setItem(data))
+  }
   return (
     <div className="container">
       <h3 className="mt-5">Update the product</h3>
@@ -51,9 +67,9 @@ const Inventory = () => {
           className="w-50"
         ></div>
       </div>
+      <div className="my-5 p-2" style={{ border: "2px solid #36D7B7", borderRadius: "10px" }}>
       <div
-        className="d-flex justify-content-center py-4 px-0 my-5"
-        style={{ border: "2px solid #36D7B7", borderRadius: "10px" }}
+        className="d-flex justify-content-center px-0 my-5"
       >
         <div>
           <img src={img} alt="" />
@@ -71,9 +87,14 @@ const Inventory = () => {
             className="btn btn-outline-danger btn-mod ms-3 mt-4"
             onClick={handleUpdateQ}
           >
-            Update
+            Delivery
           </button>
         </div>
+      </div>
+          <form onSubmit={handleRestoke}>
+            <input className="d-block mx-auto re-mod ps-5" type="text" name="restoke" placeholder="Restoke Quantity"/>
+            <input className="mt-2 btn btn-outline-success" type="submit" value="Restoke" />
+          </form>
       </div>
     </div>
   );
