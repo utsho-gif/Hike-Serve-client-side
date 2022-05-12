@@ -1,10 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Macondo&family=Merriweather&family=Oswald&family=PT+Serif:ital@1&family=Poppins:wght@500&display=swap');
 
-
+.width-mod{
+    width: 50%;
+}
 .re-mod{
     padding: 5px;
     border-radius: 30px;
 }
 .re-mod:hover{
     border: 2px solid lightgreen;
+}
+@media screen and (max-width: 720px) {
+    .width-mod{
+        width: 100%;
+    }
 }
