@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useProduct from "../../hooks/useProduct";
 import "./Inventory.css";
 
@@ -84,7 +84,7 @@ const Inventory = () => {
         ></div>
       </div>
       <div
-        className="my-5 p-4 width-mod mx-auto"
+        className="my-4 p-4 width-mod mx-auto"
         style={{ border: "2px solid #36D7B7", borderRadius: "10px" }}
       >
         <div className="d-flex justify-content-center px-0 my-5 mx-auto">
@@ -128,6 +128,11 @@ const Inventory = () => {
           </button>
         </form>
       </div>
+      <Link to="/manageinventory">
+     <button className="btn btn-outline-dark mb-3 border-2 rounded-pill" type="button">
+          Manage Inventories
+     </button>
+ </Link>
     </div>
   );
 };

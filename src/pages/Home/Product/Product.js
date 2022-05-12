@@ -15,7 +15,7 @@ const Product = ({ product }) => {
         <h5>Quantity: {quantity}</h5>
       </div>
 
-      <button onClick={() => handleNavigate(_id)} className="btn btn-outline-dark">Manage</button>
+      <button onClick={() => handleNavigate(_id)} className="btn btn-outline-secondary">Update</button>
     </div>
   );
 };
