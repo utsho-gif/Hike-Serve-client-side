@@ -17,7 +17,7 @@ const RequireAuth = ({children}) => {
     const location = useLocation();
     const [user, loading, error] = useAuthState(auth);
     if(loading){
-        return  <HashLoader color={color} css={override} size={50}></HashLoader>
+        return  <HashLoader style={{marginBottom:'50px'}} color={color} css={override} size={50}></HashLoader>
     }
     if(!user){
         return <Navigate to='/signin' state={{from: location}} replace></Navigate>

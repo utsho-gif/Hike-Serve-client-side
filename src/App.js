@@ -8,6 +8,10 @@ import Inventory from "./pages/Inventory/Inventory";
 import RequireAuth from "./pages/SignIn/RequireAuth/RequireAuth";
 import SignUp from "./pages/SignIn/SignUp/SignUp";
 import ManageInv from "./pages/ManageInv/ManageInv";
+import AddInventory from "./pages/AddInventory/AddInventory";
+import MyItem from "./pages/MyItem/MyItem";
+import Footer from "./pages/Shared/Footer/Footer";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -24,10 +28,27 @@ function App() {
             </RequireAuth>
           }
         ></Route>
-        <Route path='/manageinventory' element={<ManageInv></ManageInv>}></Route>
+        <Route
+          path="/manageinventory"
+          element={<ManageInv></ManageInv>}
+        ></Route>
+        <Route
+          path="/addinventory"
+          element={<AddInventory></AddInventory>}
+        ></Route>
+        <Route
+          path="/myitems"
+          element={
+            <RequireAuth>
+              <MyItem></MyItem>
+            </RequireAuth>
+          }
+        ></Route>
         <Route path="/signin" element={<SignIn></SignIn>}></Route>
-        <Route path='/signup' element={<SignUp></SignUp>}></Route>
+        <Route path="/signup" element={<SignUp></SignUp>}></Route>
+        <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
+      <Footer></Footer>
     </div>
   );
 }

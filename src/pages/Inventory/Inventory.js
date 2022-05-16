@@ -9,7 +9,8 @@ const Inventory = () => {
   const [product, setProduct] = useState({});
   const [isReload, setReload] = useState(false);
   const [error, setError] = useState("");
-  const { _id, name, img, description, price, quantity, supplier, sold } =
+  const [solds, setSolds] = useState("");
+  const { _id, name, img, description, price, quantity, supplier} =
     product;
 
   useEffect(() => {
@@ -23,22 +24,24 @@ const Inventory = () => {
   const handleUpdateQ = (quantity) => {
     const delivery = parseInt(quantity);
     const newDelivery = delivery - 1;
-
-    // console.log(newDelivery);
-
-    //send to server
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ quantity: newDelivery }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        setReload(!isReload);
-      });
+    if(newDelivery >= 0){
+      fetch(url, {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ quantity: newDelivery }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          // console.log(data);
+          setReload(!isReload);
+        });
+    }
+    else{
+      setSolds('Sold');
+    }
+    
   };
 
   const handleSub = (event) => {
@@ -63,7 +66,7 @@ const Inventory = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           setReload(!isReload);
         });
     } else {
@@ -88,22 +91,27 @@ const Inventory = () => {
         style={{ border: "2px solid #36D7B7", borderRadius: "10px" }}
       >
         <div className="d-flex justify-content-center px-0 my-5 mx-auto">
-          <div className="ms-5">
-            <div className="text-start">
-              <img src={img} alt="" />
+          <div className="">
+            <div>
+            <img className="h-50 w-50" src={img} alt="" />
+            </div>
+            <div className="text-start ms-5">
               <div className="my-4">
                 <h4>{name}</h4>
                 <h6>Product Id: {_id}</h6>
+                <h6>Description: {description}</h6>
+                <h6>Price: {price}</h6>
                 <h6>Quantity: {quantity}</h6>
-                <h6>Supplier: </h6>
+                <h6>Supplier: {supplier}</h6>
               </div>
               <div>
-                <button
-                  className="btn btn-outline-danger btn-mod"
+                {quantity === 0 ? <button className="btn btn-danger">Sold</button> : <button
+                  className="btn btn-outline-danger"
                   onClick={() => handleUpdateQ(quantity)}
                 >
                   Delivery
-                </button>
+                </button>}
+                
               </div>
             </div>
           </div>

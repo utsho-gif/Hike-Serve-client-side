@@ -50,15 +50,28 @@ const SignIn = () => {
     )
   }
 
-  if(user){
-    navigate(from, { replace : true });
-  }
+  // if(user){
+  //   navigate(from, { replace : true });
+  // }
 
-  const handleSubmit = event => {
+  const handleSubmit =async (event) => {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
-    signInWithEmailAndPassword(email, password);
+    await signInWithEmailAndPassword(email, password);
+    const url = `http://localhost:5000/login`;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'content-type' : 'application/json'
+      },
+      body: JSON.stringify({email})
+    })
+    .then(res => res.json())
+    .then(data => {
+      localStorage.setItem('accessToken', data.accessToken);
+      navigate(from, { replace : true });
+    })
   }
   const handleResetPass = async event => {
     const email = emailRef.current.value;

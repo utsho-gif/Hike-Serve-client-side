@@ -1,0 +1,10 @@
+.icon{
+    /* font-weight: 800; */
+    font-size: 20px;
+    color: aliceblue;
+}
+.btn-mod{
+    height: 3rem;
+    width: 3rem;
+    border: none;
+}

@@ -5,12 +5,13 @@ import { Link } from 'react-router-dom';
 import auth from '../../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
-import { HashLoader } from "react-spinners";
+import { ScaleLoader } from "react-spinners";
 import { css } from "@emotion/react";
+import CustomLink from '../CustomLink/CustomLink';
 
 const override = css`
   display: block;
-  margin: 5px auto;
+  margin: 0px 3px;
   border-color: red;
 `;
 
@@ -22,7 +23,7 @@ const Header = () => {
   if(loading){
     loadingEle = (
       <p>
-        <HashLoader color={color} css={override} size={35}></HashLoader>
+        <ScaleLoader color={color} css={override} size={15}></ScaleLoader>
       </p>
     )
   }
@@ -39,14 +40,18 @@ const Header = () => {
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="me-auto">
-      <Nav.Link as={Link} to='/'>Home</Nav.Link>
-      <Nav.Link as={Link} to='/manageinventory'>Manage</Nav.Link>
-      <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+      <Nav.Link as={CustomLink} to='/'>Home</Nav.Link>
+      <NavDropdown title="More" id="collasible-nav-dropdown">
+        { user? 
+        <>
+          <NavDropdown.Item as={CustomLink} to='/manageinventory'>Manage Item</NavDropdown.Item> 
+          <NavDropdown.Item as={CustomLink} to='/addinventory'>Add Items</NavDropdown.Item>
+          <NavDropdown.Divider />
+          <NavDropdown.Item as={CustomLink} to='/myitems'>My Item</NavDropdown.Item>
+        </>
+        : <NavDropdown title="More" id="collasible-nav-dropdown" disabled></NavDropdown> 
+      }
+        
       </NavDropdown>
     </Nav>
     <Nav>
