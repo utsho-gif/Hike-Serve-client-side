@@ -13,7 +13,7 @@ const Product = ({ product }) => {
         <img className="w-50" src={img} alt="" />
         <div className="mt-4 text-start ms-5">
         <h4>{name}</h4>
-        <h6>Description: {description.slice(0,60) + ' ...'} </h6>
+        <h6>Description: {description.slice(0,50) + ' ...'} </h6>
         <h5>Price: {price}</h5>
         <h6>Quantity: {quantity}</h6>
         <h6>Supplier: {supplier}</h6>

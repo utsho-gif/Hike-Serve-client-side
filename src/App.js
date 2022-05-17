@@ -12,6 +12,7 @@ import AddInventory from "./pages/AddInventory/AddInventory";
 import MyItem from "./pages/MyItem/MyItem";
 import Footer from "./pages/Shared/Footer/Footer";
 import NotFound from "./pages/NotFound/NotFound";
+import Blogs from "./pages/Blogs/Blogs";
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
             </RequireAuth>
           }
         ></Route>
+        <Route path="/blogs" element={<Blogs></Blogs>}></Route>
         <Route path="/signin" element={<SignIn></SignIn>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
         <Route path="*" element={<NotFound></NotFound>}></Route>

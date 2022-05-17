@@ -37,10 +37,11 @@ const Header = () => {
     return (
         <Navbar collapseOnSelect expand="lg" variant="dark" className='fonts colors'>
   <Container>
+  <Navbar.Brand as={Link} to='/'> <img height={50} width={60} src="https://i.ibb.co/BtzQQhF/Capture.jpg" style={{borderRadius:'10px'}} alt="" /> </Navbar.Brand>
   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
   <Navbar.Collapse id="responsive-navbar-nav">
     <Nav className="me-auto">
-      <Nav.Link as={CustomLink} to='/'>Home</Nav.Link>
+      <Nav.Link as={CustomLink} to='/home'>Home</Nav.Link>
       <NavDropdown title="More" id="collasible-nav-dropdown">
         { user? 
         <>
@@ -54,13 +55,14 @@ const Header = () => {
         
       </NavDropdown>
     </Nav>
+    <Nav.Link as={CustomLink} to='/blogs'>Blogs</Nav.Link>
     <Nav>
     {!user && loadingEle}
       {user? <>
         {loadingEle}
         <p className='my-auto me-3 text-warning text-bold name-mod'>{user?.displayName}</p>
         <button onClick={handleSignOut} className='btn btn-outline-light my-auto h-25 modify'>Sign Out</button>
-      </>  :  <Nav.Link as={Link} to='/signin'>Sign In</Nav.Link>}
+      </>  :  <Nav.Link as={CustomLink} to='/signin'>Sign In</Nav.Link>}
     </Nav>
   </Navbar.Collapse>
   </Container>

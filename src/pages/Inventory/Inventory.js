@@ -10,21 +10,20 @@ const Inventory = () => {
   const [isReload, setReload] = useState(false);
   const [error, setError] = useState("");
   const [solds, setSolds] = useState("");
-  const { _id, name, img, description, price, quantity, supplier} =
-    product;
+  const { _id, name, img, description, price, quantity, supplier } = product;
 
   useEffect(() => {
-    const url = `http://localhost:5000/inventory/${id}`;
+    const url = `https://aqueous-taiga-75883.herokuapp.com/inventory/${id}`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setProduct(data));
   }, [isReload]);
 
-  const url = `http://localhost:5000/inventory/${id}`;
+  const url = `https://aqueous-taiga-75883.herokuapp.com/inventory/${id}`;
   const handleUpdateQ = (quantity) => {
     const delivery = parseInt(quantity);
     const newDelivery = delivery - 1;
-    if(newDelivery >= 0){
+    if (newDelivery >= 0) {
       fetch(url, {
         method: "PUT",
         headers: {
@@ -37,11 +36,9 @@ const Inventory = () => {
           // console.log(data);
           setReload(!isReload);
         });
+    } else {
+      setSolds("Sold");
     }
-    else{
-      setSolds('Sold');
-    }
-    
   };
 
   const handleSub = (event) => {
@@ -93,7 +90,7 @@ const Inventory = () => {
         <div className="d-flex justify-content-center px-0 my-5 mx-auto">
           <div className="">
             <div>
-            <img className="h-50 w-50" src={img} alt="" />
+              <img className="h-50 w-50" src={img} alt="" />
             </div>
             <div className="text-start ms-5">
               <div className="my-4">
@@ -105,13 +102,16 @@ const Inventory = () => {
                 <h6>Supplier: {supplier}</h6>
               </div>
               <div>
-                {quantity === 0 ? <button className="btn btn-danger">Sold</button> : <button
-                  className="btn btn-outline-danger"
-                  onClick={() => handleUpdateQ(quantity)}
-                >
-                  Delivery
-                </button>}
-                
+                {quantity === 0 ? (
+                  <button className="btn btn-danger">Sold</button>
+                ) : (
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => handleUpdateQ(quantity)}
+                  >
+                    Delivery
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -137,10 +137,13 @@ const Inventory = () => {
         </form>
       </div>
       <Link to="/manageinventory">
-     <button className="btn btn-outline-dark mb-3 border-2 rounded-pill" type="button">
+        <button
+          className="btn btn-outline-dark mb-3 border-2 rounded-pill"
+          type="button"
+        >
           Manage Inventories
-     </button>
- </Link>
+        </button>
+      </Link>
     </div>
   );
 };

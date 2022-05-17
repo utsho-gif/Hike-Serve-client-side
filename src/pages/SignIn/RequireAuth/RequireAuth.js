@@ -13,7 +13,7 @@ const override = css`
 `;
 
 const RequireAuth = ({children}) => {
-    let [color, setColor] = useState("#36D7B7");
+    let [color] = useState("#36D7B7");
     const location = useLocation();
     const [user, loading, error] = useAuthState(auth);
     if(loading){
